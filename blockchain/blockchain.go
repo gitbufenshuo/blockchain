@@ -1,4 +1,4 @@
-package main
+package blockchain
 
 import (
 	"bytes"
@@ -191,16 +191,16 @@ func (pow *ProofOfWork) Validate() bool {
 }
 
 ///
-func main() {
-	bc := NewBlockchain()
-	bc.AddBlock("send 1 btc to ivan")
-	bc.AddBlock("send 2 more btc to ivan")
-	iter := bc.Iterator()
-	block := new(Block)
-	var idx int
-	for iter.Next(block) {
-		fmt.Println("---:")
-		fmt.Printf("%x %x\n", block.Hash, block.PrevBlockHash)
-		idx++
-	}
-}
+// func main() {
+// 	bc := NewBlockchain()
+// 	bc.AddBlock("send 1 btc to ivan")
+// 	bc.AddBlock("send 2 more btc to ivan")
+// 	iter := bc.Iterator()
+// 	block := new(Block)
+// 	var idx int
+// 	for iter.Next(block) {
+// 		fmt.Println("---:")
+// 		fmt.Printf("%x %x\n", block.Hash, block.PrevBlockHash)
+// 		idx++
+// 	}
+// }

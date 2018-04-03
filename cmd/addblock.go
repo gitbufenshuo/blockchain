@@ -15,15 +15,13 @@
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/gitbufenshuo/blockchain/blockchain"
 	"github.com/spf13/cobra"
 )
 
-// printchainCmd represents the printchain command
-var printchainCmd = &cobra.Command{
-	Use:   "printchain",
+// addblockCmd represents the addblock command
+var addblockCmd = &cobra.Command{
+	Use:   "addblock",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -31,31 +29,26 @@ and usage of using your command. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
-	Run: Printchain,
+	Run: Addblock,
 }
 
 func init() {
-	RootCmd.AddCommand(printchainCmd)
+	RootCmd.AddCommand(addblockCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// printchainCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// addblockCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// printchainCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// addblockCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
-
-///
-///
-///
-func Printchain(cmd *cobra.Command, args []string) {
-	bc := blockchain.NewBlockchain()
-	block := new(blockchain.Block)
-	iter := bc.Iterator()
-	for iter.Next(block) {
-		fmt.Printf("%x->%x\n", block.Hash, block.PrevBlockHash)
+func Addblock(cmd *cobra.Command, args []string) {
+	if len(args) == 0 {
+		return
 	}
+	bc := blockchain.NewBlockchain()
+	bc.AddBlock(args[0])
 }

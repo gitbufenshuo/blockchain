@@ -15,13 +15,17 @@
 package cmd
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/gitbufenshuo/blockchain/blockchain"
+
 	"github.com/spf13/cobra"
 )
 
-// addblockCmd represents the addblock command
-var addblockCmd = &cobra.Command{
-	Use:   "addblock",
+// getbalanceCmd represents the getbalance command
+var getbalanceCmd = &cobra.Command{
+	Use:   "getbalance",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -29,26 +33,32 @@ and usage of using your command. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
-	Run: Addblock,
+	Run: Getbalance,
 }
 
 func init() {
-	RootCmd.AddCommand(addblockCmd)
+	RootCmd.AddCommand(getbalanceCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// addblockCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// getbalanceCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// addblockCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// getbalanceCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
-func Addblock(cmd *cobra.Command, args []string) {
+func Getbalance(cmd *cobra.Command, args []string) {
 	if len(args) == 0 {
-		return
+		os.Exit(1)
 	}
-	bc := blockchain.NewBlockchain()
-	bc.AddBlock(args[0])
+	fmt.Printf("Getbalance , the address is %v\n", args[0])
+	bc := blockchain.NewBlockchain("")
+	var value int
+	UTXO := bc.FindUTXO(args[0])
+	for idx := range UTXO {
+		value += UTXO[idx].Value
+	}
+	fmt.Println(value)
 }
